@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+ http://www.springframework.org/schema/beans 
+ http://www.springframework.org/schema/beans/spring-beans.xsd 
+ http://www.springframework.org/schema/tx 
+ http://www.springframework.org/schema/tx/spring-tx.xsd 
+ http://www.springframework.org/schema/mvc
+ http://www.springframework.org/schema/mvc/spring-mvc.xsd
+ http://www.springframework.org/schema/context 
+ http://www.springframework.org/schema/context/spring-context.xsd 
+ http://www.springframework.org/schema/aop 
+ http://www.springframework.org/schema/aop/spring-aop.xsd"
+	default-lazy-init="false">
+
+	<description>Spring MVC Configuration</description>
+
+	<!-- 静态资源访问 -->
+	<mvc:default-servlet-handler />
+
+	<!-- controller中添加aop切面 -->
+	<aop:aspectj-autoproxy proxy-target-class="true" />
+
+	<!-- 编码格式 -->
+	<mvc:annotation-driven>
+		<mvc:message-converters register-defaults="true">
+			<bean
+				class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
+				<property name="supportedMediaTypes">
+					<list>
+						<value>application/json;charset=UTF-8</value>
+						<value>text/html;charset=UTF-8</value>
+					</list>
+				</property>
+				<!-- 将null替换为空串 -->
+				<property name="objectMapper">
+					<bean class="org.haozf.common.util.ObjectMappingCustomer"/>
+				</property>
+			</bean>
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+				<constructor-arg value="UTF-8" />
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+
+	<!-- 只扫描Controller 注解 -->
+	<!-- <context:component-scan base-package="org.haozf.api"
+		use-default-filters="false">
+		<context:include-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+	</context:component-scan> -->
+	
+	<bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
+		<property name="prefix" value="/WEB-INF/view/jsp/" />
+		<property name="suffix" value=".jsp" />
+		<property name="order" value="1" />
+	</bean>
+	
+	
+	<!-- 用户模块 -->
+	<context:component-scan base-package="org.haozf.api.user.controller" />
+	<context:component-scan base-package="org.haozf.identity.user.controller" />
+	<!-- 个人会员模块 -->
+	<context:component-scan base-package="org.haozf.api.person.controller" />
+	<context:component-scan base-package="org.haozf.identity.person.controller" />
+	<!-- 会员模块 -->
+	<context:component-scan base-package="org.haozf.api.member.controller" />
+	<context:component-scan base-package="org.haozf.identity.member.controller" />
+	<!-- 数据导入模块 -->
+	<context:component-scan base-package="org.haozf.api.importdata.controller" />
+	<!-- 数据导入模块 -->
+	<context:component-scan base-package="org.haozf.api.sync.controller" />
+	<!-- oauth2.0授权服务器 -->
+	<context:component-scan base-package="org.haozf.oauth2.authz.web.controller" />
+	
+	
+	
+	<!--配置拦截器, 多个拦截器,顺序执行 -->  
+	<mvc:interceptors>    
+	 	<!-- 匹配的是url路径， 如果不配置或/**,将拦截所有的Controller -->  
+	    <mvc:interceptor>
+	    	<mvc:mapping path="/api/person/**" />
+	    	<mvc:mapping path="/api/user/**" />
+	    	<mvc:mapping path="/api/member/**" />      
+	        <mvc:mapping path="/api/sync/**" />  
+	        <mvc:mapping path="/api/import/**" />  
+	        <bean class="org.haozf.api.common.interceptor.OauthInterceptor"></bean>    
+	    </mvc:interceptor>
+	     <mvc:interceptor>    
+	        <mvc:mapping path="/api/user/**" />  
+	        <mvc:mapping path="/api/person/**" />
+	    	<mvc:mapping path="/api/member/**" />    
+	        <bean class="org.haozf.api.common.interceptor.UserInterceptor"></bean>    
+	    </mvc:interceptor>
+	    <mvc:interceptor>    
+	        <mvc:mapping path="/user/**" />  
+	        <bean class="org.haozf.common.interceptor.UserInterceptor"></bean>    
+	    </mvc:interceptor> 
+	    <!-- 当设置多个拦截器时，先按顺序调用preHandle方法，然后逆序调用每个拦截器的postHandle和afterCompletion方法 -->  
+	</mvc:interceptors>  
+	
+</beans>

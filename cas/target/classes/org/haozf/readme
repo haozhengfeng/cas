@@ -1,0 +1,14 @@
+api（接口模块）
+	common（公共模块）
+	importdata（数据导入模块）
+	sync（数据同步模块）
+	user（用户模块）
+cas（cas服务器端扩展模块）
+	authentication（认证模块）
+	encoder（加密模块）
+	flow（webflow模块）
+oauth2(授权模块)
+	core（基础模块）
+	authz（授权服务模块）
+	resources（资源服务模块）
+	

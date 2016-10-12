@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 天远：数据库配置文件 -->
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd 
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx.xsd 
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop.xsd"
+	default-lazy-init="false">
+	
+	<!-- <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	   <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+	   <property name="url" value="jdbc:mysql://localhost:3306/hibernate" />
+	   <property name="username" value="root" />
+	   <property name="password" value="" />
+	</bean> -->
+	
+	<!--  配置  oauth2.0 JdbcTemplate  -->
+	<bean id="jdbc" class="org.springframework.jdbc.core.JdbcTemplate">
+		<constructor-arg ref="dataSource" />
+	</bean>
+	
+	<!-- 配置JdbcTemplate -->
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+		<constructor-arg ref="dataSource" />
+	</bean>
+	
+	<!-- 数据源配置	使用应用内的druid数据库连接池 -->
+	<bean id="stat-filter" class="com.alibaba.druid.filter.stat.StatFilter">
+		<property name="slowSqlMillis" value="3000" />
+		<property name="logSlowSql" value="true" />
+	</bean>
+	
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">
+		<property name="driverClassName" value="${jdbc.cas.driverClassName}" />
+		<property name="url" value="${jdbc.cas.url}" />
+		<property name="username" value="${jdbc.cas.username}" />
+		<property name="password" value="${jdbc.cas.password}" />
+		<property name="initialSize" value="${jdbc.initialSize}" />
+		<property name="minIdle" value="${jdbc.minIdle}" />
+		<property name="maxActive" value="${jdbc.maxActive}" />
+		<property name="maxWait" value="${jdbc.maxWait}" />
+		<!-- 以下通用 -->
+		<property name="minEvictableIdleTimeMillis" value="300000"></property>
+		<property name="timeBetweenEvictionRunsMillis" value="60000"></property>
+		<property name="removeAbandoned" value="true"></property>
+		<property name="logAbandoned" value="true" />
+		<property name="removeAbandonedTimeout" value="1800"></property>
+		<property name="testWhileIdle" value="true"></property>
+		<property name="validationQuery" value="select 1"></property>
+		<property name="proxyFilters">
+			<list>
+				<ref bean="stat-filter" />
+			</list>
+		</property>
+	</bean>
+	
+	<!-- <bean id="casJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+		<constructor-arg ref="casDataSource" />
+	</bean>
+	
+	<bean id="casDataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">
+		<property name="driverClassName" value="${jdbc.cas.driverClassName}" />
+		<property name="url" value="${jdbc.cas.url}" />
+		<property name="username" value="${jdbc.cas.username}" />
+		<property name="password" value="${jdbc.cas.password}" />
+		<property name="initialSize" value="${jdbc.initialSize}" />
+		<property name="minIdle" value="${jdbc.minIdle}" />
+		<property name="maxActive" value="${jdbc.maxActive}" />
+		<property name="maxWait" value="${jdbc.maxWait}" />
+		以下通用
+		<property name="minEvictableIdleTimeMillis" value="300000"></property>
+		<property name="timeBetweenEvictionRunsMillis" value="60000"></property>
+		<property name="removeAbandoned" value="true"></property>
+		<property name="logAbandoned" value="true" />
+		<property name="removeAbandonedTimeout" value="1800"></property>
+		<property name="testWhileIdle" value="true"></property>
+		<property name="validationQuery" value="select 1"></property>
+		<property name="proxyFilters">
+			<list>
+				<ref bean="stat-filter" />
+			</list>
+		</property>
+	</bean> -->
+	
+	<bean id="ershouJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+		<constructor-arg ref="ershouDataSource" />
+	</bean>
+	
+	<bean id="ershouDataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">
+		<property name="driverClassName" value="${jdbc.ershou.driverClassName}" />
+		<property name="url" value="${jdbc.ershou.url}" />
+		<property name="username" value="${jdbc.ershou.username}" />
+		<property name="password" value="${jdbc.ershou.password}" />
+		<property name="initialSize" value="${jdbc.initialSize}" />
+		<property name="minIdle" value="${jdbc.minIdle}" />
+		<property name="maxActive" value="${jdbc.maxActive}" />
+		<property name="maxWait" value="${jdbc.maxWait}" />
+		<!-- 以下通用 -->
+		<property name="minEvictableIdleTimeMillis" value="300000"></property>
+		<property name="timeBetweenEvictionRunsMillis" value="60000"></property>
+		<property name="removeAbandoned" value="true"></property>
+		<property name="logAbandoned" value="true" />
+		<property name="removeAbandonedTimeout" value="1800"></property>
+		<property name="testWhileIdle" value="true"></property>
+		<property name="validationQuery" value="select 1"></property>
+		<property name="proxyFilters">
+			<list>
+				<ref bean="stat-filter" />
+			</list>
+		</property>
+	</bean>
+	
+	
+	<bean id="d1cmJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+		<constructor-arg ref="d1cmDataSource" />
+	</bean>
+	
+	<bean id="d1cmDataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">
+		<property name="driverClassName" value="${jdbc.d1cm.driverClassName}" />
+		<property name="url" value="${jdbc.d1cm.url}" />
+		<property name="username" value="${jdbc.d1cm.username}" />
+		<property name="password" value="${jdbc.d1cm.password}" />
+		<property name="initialSize" value="${jdbc.initialSize}" />
+		<property name="minIdle" value="${jdbc.minIdle}" />
+		<property name="maxActive" value="${jdbc.maxActive}" />
+		<property name="maxWait" value="${jdbc.maxWait}" />
+		<!-- 以下通用 -->
+		<property name="minEvictableIdleTimeMillis" value="300000"></property>
+		<property name="timeBetweenEvictionRunsMillis" value="60000"></property>
+		<property name="removeAbandoned" value="true"></property>
+		<property name="logAbandoned" value="true" />
+		<property name="removeAbandonedTimeout" value="1800"></property>
+		<property name="testWhileIdle" value="true"></property>
+		<property name="validationQuery" value="select 1"></property>
+		<property name="proxyFilters">
+			<list>
+				<ref bean="stat-filter" />
+			</list>
+		</property>
+	</bean>
+	
+	
+	<bean id="maiPeiJianJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+		<constructor-arg ref="maiPeiJianDataSource" />
+	</bean>
+	
+	<bean id="maiPeiJianDataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">
+		<property name="driverClassName" value="${jdbc.maiPeiJian.driverClassName}" />
+		<property name="url" value="${jdbc.maiPeiJian.url}" />
+		<property name="username" value="${jdbc.maiPeiJian.username}" />
+		<property name="password" value="${jdbc.maiPeiJian.password}" />
+		<property name="initialSize" value="${jdbc.initialSize}" />
+		<property name="minIdle" value="${jdbc.minIdle}" />
+		<property name="maxActive" value="${jdbc.maxActive}" />
+		<property name="maxWait" value="${jdbc.maxWait}" />
+		<!-- 以下通用 -->
+		<property name="minEvictableIdleTimeMillis" value="300000"></property>
+		<property name="timeBetweenEvictionRunsMillis" value="60000"></property>
+		<property name="removeAbandoned" value="true"></property>
+		<property name="logAbandoned" value="true" />
+		<property name="removeAbandonedTimeout" value="1800"></property>
+		<property name="testWhileIdle" value="true"></property>
+		<property name="validationQuery" value="select 1"></property>
+		<property name="proxyFilters">
+			<list>
+				<ref bean="stat-filter" />
+			</list>
+		</property>
+	</bean>
+	
+<!-- 	<tx:annotation-driven transaction-manager="transactionManager"/>	
+ -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!--transaction-->
+    <!--aop-->
+    <aop:config>
+        <aop:advisor advice-ref="applicationAdvisor" pointcut="execution(* org.haozf..service.impl.*.*(..))"/>
+    </aop:config>
+
+    <!--advisor-->
+    <tx:advice id="applicationAdvisor" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="*" propagation="REQUIRED"/>
+            <tx:method name="load*" propagation="REQUIRED" read-only="true"/>
+            <tx:method name="is*" propagation="REQUIRED" read-only="true"/>
+        </tx:attributes>
+    </tx:advice>
+	
+	
+</beans>

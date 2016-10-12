@@ -1,0 +1,9 @@
+#注册后，自动登录
+#service：cas认证成功后，重定向url
+#loginUrl：其实是remoteLoginUrl，出现错误时重定向url
+redirect:https://cas.server.com:8443/cas/remoteLogin
+?username="+user.getUsername()+"
+&password="+oldp+"
+&service=http://cas.client.tianyuan.com:8080/cas-client/reallogin.jsp
+&loginUrl=http://cas.client.tianyuan.com:8080/cas-client/reallogin.jsp
+&isSubmit=true

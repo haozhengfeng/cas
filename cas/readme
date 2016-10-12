@@ -1,0 +1,29 @@
+
+已更新：
+1、子系统添加注册页面，注册后自动登录
+2、子系统自定义登录页面
+3、子系统添加cookie
+4、服务器关闭https
+5、服务器添加spring mvc api接口
+6、服务器端添加数据导入接口
+      服务器端添加多数据源
+7、服务器端重构代码
+8、服务器端实现json返回数据
+9、服务器端api接口ticket验证
+10、导入快优客用户信息，数据库添加注册来源标记
+11、添加saml支持
+12、客户端解决不能同步登录问题  
+	解决方案：top.jsp页面添加iframe src="login.jsp" 拦截login.jsp页面
+13、cas服务器端添加用户锁定异常
+14、快优客、cas服务器优化通过username、mobile、email登录逻辑
+15、解决cas通过多条件、返回多属性问题
+16、cas服务器端api添加sync数据同步模块
+17、添加@WithOutLogin注解 CheckTGTAspect切面中使用
+18、研究apache oltu oauth2.0 客户端模式
+19、使用spring mvc拦截器 实现判断用户登录以及oauth功能 
+
+待更新：
+修改ApiStatus为登录状态
+添加oauth2.0
+
+
