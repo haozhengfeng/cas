@@ -2,9 +2,12 @@
 天远-单点登录demo
 
 cas：单点登录服务器端
+
 cas-client：cas2协议demo客户端
+
 cas-client4:saml协议demo客户端
 
+电子证书：
 服务端创建证书:
 keytool -genkey -alias tianyuan  -keyalg RSA -keystore D:\
 j2ee\apache-tomcat-7.0.55\key\.keystore
